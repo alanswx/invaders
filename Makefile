@@ -7,7 +7,8 @@ HEADERS:=$(wildcard *.h) Makefile
 
 OS:=$(shell uname)
 ifeq ($(OS),Darwin) #OSX
-  GL_FLAGS=-lglew -lglfw -framework Cocoa -framework OpenGL -lpthread
+  #GL_FLAGS=-lglew -lglfw -framework Cocoa -framework OpenGL -lpthread
+  GL_FLAGS= -lglfw -framework Cocoa -framework OpenGL -lpthread
   CFLAGS:=$(CFLAGS) -DAPPLE
 else # Linux or other
   GL_FLAGS=-lglfw -lGL -lpthread

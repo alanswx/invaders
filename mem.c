@@ -1,6 +1,7 @@
 #include "defs.h"
 
 u8 mem[MEMSIZE];
+u8 pal[PALSIZE];
 u8 *mem_ptr = mem;
 
 int mem_load(u8 *at, char *fname) {
@@ -39,22 +40,34 @@ void mem_print(u8 *a, u32 len) {
   }
 }
 
+
+
 void mem_1bpp(u8 *s, u8 *m, u16 w, u16 h) {
 
   u16 lines=w;
   u16 cols=h/8;
-
+  u32 offset=0;
   for (u16 l=0; l<lines; l++) {
     for (u16 c=0; c<cols; c++) {
       u16 addr = cols*l+c;
       u8 v = m[addr];
       for (u16 i=0; i<8; i++) {
         u32 off = addr*8+i;
-        s[4*(off)+0] = ((v>>i) & 0x1) ? 0xff : 0x00;
-        s[4*(off)+1] = ((v>>i) & 0x1) ? 0xff : 0x00;
-        s[4*(off)+2] = ((v>>i) & 0x1) ? 0xff : 0x00;
-        s[4*(off)+3] = ((v>>i) & 0x1) ? 0xff : 0x00;
+   u32 color_address = (offset>> 8 << 5) | (offset& 0x1f) + 0x80;   
+   u32 color = pal[color_address] & 0x07;
+        int val = (v>>i) &0x1;
+	val=0xff;
+//if (val) printf("val:%x color: %x color_address: %x\n",val,color,color_address);
+        s[4*(off)+0] = val ? color&0x01 ? 0xFF:0x00:0x00;
+        s[4*(off)+1] = val ? color&0x04 ? 0xFF :0x00:0x00;
+        s[4*(off)+2] = val ? color&0x02 ? 0XFF :0x00:0x00;
+        //s[4*(off)+0] = ((v>>i) & 0x1) ? 0xff : 0x00;
+        //s[4*(off)+1] = ((v>>i) & 0x1) ? 0xff : 0x00;
+        //s[4*(off)+2] = ((v>>i) & 0x1) ? 0xff : 0x00;
+        //s[4*(off)+3] = ((v>>i) & 0x1) ? 0xff : 0x00;
+        s[4*(off)+3] = ((v>>i) & 0x1) ? 0xff : 0x00; // doesn't seem used
       }
+  	offset++;
     }
   }
 }

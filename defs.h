@@ -68,6 +68,7 @@ typedef struct {
 
 #define PTR_REG(x) ptrs(c, (x))
 #define MEMSIZE 0x40000
+#define PALSIZE  1024
 
 extern void *ops[256];
 extern void ops_init();
@@ -83,6 +84,7 @@ extern u8 r8(u16);
 extern void w8(u16, u8 v);
 extern u8 f8(cpu *c);
 extern u8 mem[MEMSIZE];
+extern u8 pal[PALSIZE];
 extern u8 *mem_ptr;
 extern u8 *ptrs(cpu* c, u8 idx);
 extern const char *optxt[256];
