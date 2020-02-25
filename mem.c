@@ -53,11 +53,16 @@ void mem_1bpp(u8 *s, u8 *m, u16 w, u16 h) {
       u8 v = m[addr];
       for (u16 i=0; i<8; i++) {
         u32 off = addr*8+i;
-   u32 color_address = (offset>> 8 << 5) | (offset& 0x1f) + 0x80;   
+   //u32 color_address = (offset>> 8 << 5) | (offset& 0x1f) + 0x80;   
+   u32 color_address = ((offset>> 8 << 5) | (offset& 0x1f)) + 128;   
    u32 color = pal[color_address] & 0x07;
         int val = (v>>i) &0x1;
 	val=0xff;
-//if (val) printf("val:%x color: %x color_address: %x\n",val,color,color_address);
+
+       uint8_t y = offset >> 5;
+        uint8_t x = offset << 3;
+
+//if (val) printf("offset %d  x %d y %d (%d,%d) val:%x color: %x color_address: %x\n",offset,x,y,c*8+i,l,val,color,color_address);
         s[4*(off)+0] = val ? color&0x01 ? 0xFF:0x00:0x00;
         s[4*(off)+1] = val ? color&0x04 ? 0xFF :0x00:0x00;
         s[4*(off)+2] = val ? color&0x02 ? 0XFF :0x00:0x00;

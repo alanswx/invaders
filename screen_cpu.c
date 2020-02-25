@@ -367,7 +367,10 @@ void *work(void *args) {
   char *romname = (char*)args;
   printf("romname = %s\n", romname);
   u16 load_at = 0;
-  mem_load(&pal[0], "pv06.1");
+  mem_load(&pal[0], "cv01.1");
+  //mem_load(&pal[0], "tn06");
+  //mem_load(&pal[0], "01.1");
+  //mem_load(&pal[0], "pv06.1");
   //mem_load(&pal[0], "pv07.2");
   //mem_clear(mem_ptr, MEMSIZE);
   //mem_load(&mem_ptr[load_at], romname);
@@ -409,9 +412,11 @@ void *work(void *args) {
 int main(int argc, char **argv) {
 
   pthread_t cpu_thread;
-  char *romname = "invaders.rom";
+  //char *romname = "invaders.rom";
   //char *romname = "inpt2.rom";
   //char *romname = "ozmawars.rom";
+  //char *romname = "ballbomb.rom";
+  char *romname = "sicv.rom";
   if(pthread_create(&cpu_thread, NULL, work, (void*)romname)) {
     fprintf(stderr, "Error creating thread\n");
     return 1;
