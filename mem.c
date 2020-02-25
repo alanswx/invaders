@@ -57,7 +57,7 @@ void mem_1bpp(u8 *s, u8 *m, u16 w, u16 h) {
    u32 color_address = ((offset>> 8 << 5) | (offset& 0x1f)) + 128;   
    u32 color = pal[color_address] & 0x07;
         int val = (v>>i) &0x1;
-	val=0xff;
+	//val=0xff;
 
        uint8_t y = offset >> 5;
         uint8_t x = offset << 3;
